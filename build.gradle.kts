@@ -41,7 +41,7 @@ tasks {
             "name" to project.name,
             "version" to project.version,
             "description" to project.description,
-            "apiVersion" to extra["mcApiVersion"],
+            "apiVersion" to project.extra["mcApiVersion"],
             "group" to project.group
         )
         inputs.properties(props)
