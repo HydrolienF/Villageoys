@@ -6,3 +6,13 @@ author: Hydrolien
 website: https://github.com/HydrolienF/${name}
 api-version: "$apiVersion"
 folia-supported: true
+commands:
+  villageoys:
+    description: Interact with ${name} plugin
+    usage: /villageoys <command> [args]
+    permission: worldpopulatorh.polulate
+# dependencies:
+#   server:
+#     Towny:
+#       load: BEFORE
+#       required: false
