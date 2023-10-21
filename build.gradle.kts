@@ -12,11 +12,13 @@ repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://jitpack.io")
+    maven("https://repo.aikar.co/content/groups/aikar/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
+    implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     paperweight.foliaDevBundle("1.20.1-R0.1-SNAPSHOT")
 }
 
@@ -26,9 +28,13 @@ java {
 }
 
 tasks {
+    assemble {
+        dependsOn(reobfJar)
+    }
     shadowJar {
         relocate("org.bstats","${project.group}.bstats")
-        archiveFileName.set("${project.name}-${project.version}.jar")
+        relocate("co.aikar.commands","${project.group}.acf")
+        // archiveFileName.set("${project.name}-${project.version}.jar")
     }
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
