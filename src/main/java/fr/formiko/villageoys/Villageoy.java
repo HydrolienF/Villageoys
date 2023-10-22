@@ -1,5 +1,6 @@
 package fr.formiko.villageoys;
 
+import java.io.Serializable;
 import javax.annotation.Nullable;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerType;
 
-public class Villageoy extends Villager {
+public class Villageoy extends Villager implements Serializable {
 
     // public Villageoy(EntityType<? extends Villager> entityType, Level world) { super(entityType, world); }
 
