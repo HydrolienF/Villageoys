@@ -1,6 +1,8 @@
 package fr.formiko.villageoys.commands;
 
+import fr.formiko.villageoys.Village;
 import fr.formiko.villageoys.VillageoysPlugin;
+import fr.formiko.villageoys.util.Util;
 import javax.annotation.Nullable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,13 +44,19 @@ public class VillageoysCommand extends BaseCommand {
         }
     }
     @Subcommand("newbuilding")
-    @Syntax("<village name|uuid> <building name> <builded>")
+    @Syntax("<village name|uuid> <building name> <builded> <rotation>")
     @CommandCompletion("@villageNameOrUuid @buildingType @builded")
     @Description("Create a new Village or a new Villageoy")
     public static void onNewBuilding(CommandSender commandSender, @NotNull String villageNameOrUuid, @NotNull String buildingType,
-            @Nullable String builded) {
+            @Nullable String builded, @Nullable String rotation) {
         if (commandSender instanceof Player player) {
-            // TODO create a new building
+            Village v = VillageoysPlugin.getInstance().getVillage(villageNameOrUuid);
+            if (v == null) {
+                player.sendMessage(Component.text("Village " + villageNameOrUuid + " not found"));
+                return;
+            }
+            v.newBuilding(Util.getBuildingTypeFromString(buildingType), player.getLocation(), Util.getRotationFromString(rotation),
+                    Boolean.parseBoolean(builded));
             player.sendMessage(Component.text("New building initialized"));
         }
     }

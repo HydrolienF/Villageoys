@@ -1,36 +1,41 @@
 package fr.formiko.villageoys;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import fr.formiko.villageoys.util.Util;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import net.minecraft.world.level.block.Rotation;
 
-public class Building implements Serializable {
-    private final Location spawnLocation;
+public class Building extends Localizable {
     private final BuildingType type;
     private final Rotation rotation;
-    private final List<Chunk> chunks;
 
-    public Building(Location spawnLocation, BuildingType type, Rotation rotation) {
-        this.spawnLocation = spawnLocation;
+    public Building(Location loc, BuildingType type, Rotation rotation) {
+        super(loc.getChunk().getX(), loc.getChunk().getZ(), Util.getBestGround(loc.getChunk()), loc.getWorld().getUID());
         this.type = type;
         this.rotation = rotation;
-        this.chunks = new ArrayList<>();
-        this.chunks.add(spawnLocation.getChunk());
+        // createPlatform();
+        Bukkit.getLogger().info("Building created: " + this.toString());
     }
 
 
-    public Location getSpawnLocation() { return spawnLocation; }
     public BuildingType getType() { return type; }
     public Rotation getRotation() { return rotation; }
-    public List<Chunk> getChunks() { return chunks; }
 
     @Override
-    public String toString() {
-        return "Building{" + "spawnLocation=" + spawnLocation + ", type=" + type + ", rotation=" + rotation + ", chunks=" + chunks + '}';
+    public String toString() { return "Building{" + super.toString() + ", type=" + type + ", rotation=" + rotation + '}'; }
+
+    public void createPlatform() {
+        Chunk chunk = getChunk();
+        for (int x = 0; x < 16; x++) {
+            for (int z = 0; z < 16; z++) {
+                chunk.getBlock(x, getY(), z).setType(Material.GRASS_BLOCK);
+                // replace upper block by air
+                for (int y = getY() + 1; y < 256; y++) {
+                    chunk.getBlock(x, y, z).setType(Material.AIR);
+                }
+            }
+        }
     }
-
-
 }

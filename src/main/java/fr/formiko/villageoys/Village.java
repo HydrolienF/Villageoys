@@ -1,7 +1,5 @@
 package fr.formiko.villageoys;
 
-import fr.formiko.villageoys.util.Util;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,27 +9,23 @@ import org.jetbrains.annotations.NotNull;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.level.block.Rotation;
 
-public class Village implements Serializable {
+public class Village extends Localizable {
     private final UUID uuid;
     private List<Villageoy> villageoys;
     private List<Building> buildings;
     private String name;
     private final VillagerType type;
-    private Location spawnLocation;
+
 
     public Village(@Nullable String name, @NotNull Location spawnLocation) {
+        super(spawnLocation);
         this.uuid = UUID.randomUUID();
         this.name = name;
-        spawnLocation.setX((int) (spawnLocation.getX()));
-        spawnLocation.setY((int) (spawnLocation.getY()));
-        spawnLocation.setZ((int) (spawnLocation.getZ()));
-
-        this.spawnLocation = spawnLocation;
-        type = VillagerType.byBiome(Util.getBiome(spawnLocation));
+        type = VillagerType.byBiome(getBiome());
         villageoys = new ArrayList<>();
         buildings = new ArrayList<>();
 
-        newBuilding(BuildingType.TOWNHALL, spawnLocation, Rotation.NONE);
+        newBuilding(BuildingType.TOWNHALL, spawnLocation, Rotation.NONE, true);
     }
 
     public Village(@NotNull Location spawnLocation) { this(null, spawnLocation); }
@@ -40,15 +34,15 @@ public class Village implements Serializable {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public void newVillageoy() { villageoys.add(new Villageoy(spawnLocation, type)); }
-    public void newBuilding(BuildingType type, Location location, Rotation rotation) {
+    public void newVillageoy() { villageoys.add(new Villageoy(getLocation(), type)); }
+    public void newBuilding(BuildingType type, Location location, @Nullable Rotation rotation, boolean builded) {
         buildings.add(new Building(location, type, rotation));
     }
 
     @Override
     public String toString() {
-        return "Village{" + name + " " + uuid + ", type=" + type + ", spawnLocation=" + spawnLocation + ", villageoys=" + villageoys
-                + ", buildings=" + buildings + '}';
+        return "Village{" + name + " " + uuid + ", type=" + type + ", " + super.toString() + ", villageoys=" + villageoys + ", buildings="
+                + buildings + '}';
     }
 
 }
