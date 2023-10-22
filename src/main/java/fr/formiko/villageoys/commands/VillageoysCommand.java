@@ -64,9 +64,14 @@ public class VillageoysCommand extends BaseCommand {
     @Syntax("<village name|uuid>")
     @CommandCompletion("@villageNameOrUuid")
     @Description("Create a new Villageoy")
-    public static void onNewVillageoy(CommandSender commandSender, @Nullable String name) {
+    public static void onNewVillageoy(CommandSender commandSender, @Nullable String villageNameOrUuid) {
         if (commandSender instanceof Player player) {
-            // TODO create a new villageoy
+            Village v = VillageoysPlugin.getInstance().getVillage(villageNameOrUuid);
+            if (v == null) {
+                player.sendMessage(Component.text("Village " + villageNameOrUuid + " not found"));
+                return;
+            }
+            v.newVillageoy();
             player.sendMessage(Component.text("Villageoy spawned"));
         }
     }
