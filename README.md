@@ -22,3 +22,11 @@ After 1st launch you can edit config in `plugins/Villageoys/config.yml`
 To test plugin you need Java 17+ to compile & package: `./gradlew assemble`
 
 Then you need an 1.20 Minecraft server with PaperMc to run it.
+
+## Thanks
+
+Thanks to all the project that inspired this one:
+ - [Millénaire](https://millenaire.org/)
+ - [DawnOfTime village](https://github.com/DawnOfTimeMC/dotvillage)
+ - [Workers](https://github.com/talhanation/workers)
+ - [RealisticVillagers](https://github.com/aematsubara/RealisticVillagers)

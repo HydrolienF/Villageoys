@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -19,13 +20,16 @@ import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.NotNull;
 import co.aikar.commands.PaperCommandManager;
+import net.minecraft.world.level.block.Rotation;
 
 public class VillageoysPlugin extends JavaPlugin {
 
     public static final String ADMIN_PERMISSION = "villageoys.admin";
     private static VillageoysPlugin instance;
     private List<Village> villages;
-    private static final String FILE_PATH = "plugins/Villageoys/villages.data";
+    private static final String FILES_PATH = "plugins/Villageoys/";
+    private static final String DATA_PATH = FILES_PATH + "villages.data";
+    public static final String STRUCTURE_PATH = FILES_PATH + "structures/";
 
     @Override
     public void onEnable() {
@@ -55,12 +59,12 @@ public class VillageoysPlugin extends JavaPlugin {
 
 
     public boolean saveVillages() {
-        File f = new File(FILE_PATH).getParentFile();
+        File f = new File(DATA_PATH).getParentFile();
         if (!f.exists() && !f.mkdirs()) {
             getLogger().warning("Failed to create directory " + f.getAbsolutePath());
             return false;
         }
-        try (BukkitObjectOutputStream out = new BukkitObjectOutputStream(new GZIPOutputStream(new FileOutputStream(FILE_PATH)))) {
+        try (BukkitObjectOutputStream out = new BukkitObjectOutputStream(new GZIPOutputStream(new FileOutputStream(DATA_PATH)))) {
             out.writeObject(villages);
             return true;
         } catch (IOException e) {
@@ -70,7 +74,7 @@ public class VillageoysPlugin extends JavaPlugin {
     }
     @SuppressWarnings("unchecked")
     public boolean loadVillages() {
-        try (BukkitObjectInputStream in = new BukkitObjectInputStream(new GZIPInputStream(new FileInputStream(FILE_PATH)))) {
+        try (BukkitObjectInputStream in = new BukkitObjectInputStream(new GZIPInputStream(new FileInputStream(DATA_PATH)))) {
             villages = (List) in.readObject();
             return true;
         } catch (ClassNotFoundException | IOException e) {
@@ -79,7 +83,11 @@ public class VillageoysPlugin extends JavaPlugin {
         }
     }
 
-    public void addVillage(@Nullable String name, @NotNull Location spawnLocation) { villages.add(new Village(name, spawnLocation)); }
+    public void addVillage(@Nullable String name, @NotNull Location spawnLocation) {
+        Village village = new Village(name, spawnLocation);
+        villages.add(village);
+        village.newBuilding(BuildingType.TOWNHALL, village.getChunkX(), village.getChunkZ(), Rotation.NONE, true);
+    }
     public boolean removeVillage(@NotNull String nameOrUuid) {
         for (Village village : villages) {
             if (village.getName().equals(nameOrUuid) || village.getUuid().toString().equals(nameOrUuid)) {
@@ -98,6 +106,14 @@ public class VillageoysPlugin extends JavaPlugin {
         }
         return null;
     }
+    public @Nullable Village getVillage(UUID uuid) {
+        for (Village village : villages) {
+            if (village.getUuid().equals(uuid)) {
+                return village;
+            }
+        }
+        return null;
+    }
     public List<String> getVillagesNames() {
         List<String> names = new ArrayList<>();
         for (Village village : villages) {
@@ -105,6 +121,5 @@ public class VillageoysPlugin extends JavaPlugin {
         }
         return names;
     }
-
 
 }

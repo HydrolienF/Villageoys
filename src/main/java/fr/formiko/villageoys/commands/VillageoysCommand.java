@@ -55,8 +55,8 @@ public class VillageoysCommand extends BaseCommand {
                 player.sendMessage(Component.text("Village " + villageNameOrUuid + " not found"));
                 return;
             }
-            v.newBuilding(Util.getBuildingTypeFromString(buildingType), player.getLocation(), Util.getRotationFromString(rotation),
-                    Boolean.parseBoolean(builded));
+            v.newBuilding(Util.getBuildingTypeFromString(buildingType), player.getLocation().getChunk().getX(),
+                    player.getLocation().getChunk().getZ(), Util.getRotationFromString(rotation), Boolean.parseBoolean(builded));
             player.sendMessage(Component.text("New building initialized"));
         }
     }
