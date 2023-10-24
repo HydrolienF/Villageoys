@@ -10,16 +10,17 @@ import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.level.block.Rotation;
 
 public class Village extends Localizable {
-    private List<Villageoy> villageoys;
+    private List<Villageoy> villageoys; // TODO make saviable by using id
     private List<Building> buildings;
     private String name;
-    private final VillagerType type;
+    private String type;
+    private transient VillagerType villagerType;
 
 
     public Village(@Nullable String name, @NotNull Location spawnLocation) {
         super(spawnLocation);
         this.name = name;
-        type = VillagerType.byBiome(getBiome());
+        type = VillagerType.byBiome(getBiome()).toString();
         villageoys = new ArrayList<>();
         buildings = new ArrayList<>();
     }
@@ -29,9 +30,27 @@ public class Village extends Localizable {
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public VillagerType getType() { return type; }
+    public VillagerType getType() {
+        if (villagerType == null) {
+            villagerType = getVillagerTypeFromString(type);
+        }
+        return villagerType;
 
-    public void newVillageoy() { villageoys.add(new Villageoy(getLocation(), type)); }
+    }
+    private VillagerType getVillagerTypeFromString(String type) {
+        return switch (type) {
+            case "DESERT" -> VillagerType.DESERT;
+            case "JUNGLE" -> VillagerType.JUNGLE;
+            case "PLAINS" -> VillagerType.PLAINS;
+            case "SAVANNA" -> VillagerType.SAVANNA;
+            case "SNOW" -> VillagerType.SNOW;
+            case "SWAMP" -> VillagerType.SWAMP;
+            case "TAIGA" -> VillagerType.TAIGA;
+            default -> VillagerType.PLAINS;
+        };
+    }
+
+    public void newVillageoy() { villageoys.add(new Villageoy(getLocation(), getType())); }
     public void newBuilding(BuildingType type, int chunkX, int chunkZ, @Nullable Rotation rotation, boolean builded) {
         BuilderBuilding builder = Building.builder().setWorldUuid(getWorldUuid()).setChunkX(chunkX).setChunkZ(chunkZ).setType(type)
                 .setRotation(rotation).setBuilded(builded);
