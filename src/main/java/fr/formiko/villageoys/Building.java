@@ -3,8 +3,11 @@ package fr.formiko.villageoys;
 import fr.formiko.villageoys.util.BuildingPlan;
 import fr.formiko.villageoys.util.Resources;
 import fr.formiko.villageoys.util.Util;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -71,6 +74,51 @@ public class Building extends Localizable {
         // new File(VillageoysPlugin.STRUCTURE_PATH + "plains/house_1.nbt")
         // TODO fix getVillage() returning null
         return BuildingPlan.createFromResourceFile(Resources.getStructureFile(type, getVillage() != null ? getVillage().getType() : null));
+    }
+
+    public Map<Material, Integer> getChestContent() {
+        // TODO to fix. It don't find real content of container
+        Chunk chunk = getChunk();
+        Map<Material, Integer> content = new HashMap<>();
+        for (int y = -64; y < 255; y++) {
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    if (chunk.getBlock(x, y, z) instanceof org.bukkit.block.Container container) {
+                        Bukkit.getLogger().info("Container found in " + x + " " + y + " " + z + ": " + container + " "
+                                + Arrays.toString(container.getInventory().getContents()));
+                        container.getInventory().forEach(item -> {
+                            if (item != null) {
+                                if (content.containsKey(item.getType())) {
+                                    content.put(item.getType(), content.get(item.getType()) + item.getAmount());
+                                } else {
+                                    content.put(item.getType(), item.getAmount());
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        return content;
+    }
+
+    public Map<Material, Integer> getMaterialContent() {
+        Chunk chunk = getChunk();
+        Map<Material, Integer> content = new HashMap<>();
+        for (int y = -64; y < 255; y++) {
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    chunk.getBlock(x, y, z).getDrops().forEach(item -> {
+                        if (content.containsKey(item.getType())) {
+                            content.put(item.getType(), content.get(item.getType()) + item.getAmount());
+                        } else {
+                            content.put(item.getType(), item.getAmount());
+                        }
+                    });
+                }
+            }
+        }
+        return content;
     }
 
 

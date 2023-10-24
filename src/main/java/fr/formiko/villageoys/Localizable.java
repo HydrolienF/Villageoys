@@ -45,5 +45,5 @@ public abstract class Localizable implements Serializable {
     public boolean isNextTo(int chunkX, int chunkY) { return isNextTo(chunkX, chunkY, 1); }
 
     @Override
-    public String toString() { return getUuid() + " chunkX=" + chunkX + ", chunkZ=" + chunkZ + ", y=" + y + ", worldUuid=" + worldUuid; }
+    public String toString() { return getUuid() + " chunkX=" + chunkX + ", chunkZ=" + chunkZ + ", y=" + y; }
 }
