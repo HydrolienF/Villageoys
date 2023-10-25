@@ -11,8 +11,4 @@ commands:
     description: Interact with ${name} plugin
     usage: /villageoys <command> [args]
     permission: worldpopulatorh.polulate
-# dependencies:
-#   server:
-#     Towny:
-#       load: BEFORE
-#       required: false
+softdepend: [Towny,Vault,FlagsH]

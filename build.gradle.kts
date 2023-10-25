@@ -20,6 +20,10 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     paperweight.foliaDevBundle("1.20.1-R0.1-SNAPSHOT")
+    compileOnly("com.github.TownyAdvanced:Towny:0.99.6.0")
+    // compileOnly("io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.0")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    // compileOnly("com.github.HydrolienF:FlagsH:3.0.3") //TODO later
 }
 
 java {

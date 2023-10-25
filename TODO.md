@@ -6,7 +6,7 @@ Create a structure in a single chunck for each builing:
  - Field (wheat, potatoes, carrot, etc)
  - Enclosed plot (cow, sheep, pig, etc)
  - Mine
- - Quary
+ - Quarry
  - Armory
  - Stable
  - Library
@@ -44,6 +44,7 @@ Villagers know how to work:
  - Miner (create minning tunels outside of his job chunk) **W MinerAI**
  - Fisherman **W**
  - Beekeeper **W**
+ - Guard (Defend the village, some during day, other during night. Follow player when he is in the village)
 Villagers know how to deposit item **W DepositItemsInChestGoal**
 
 
@@ -63,10 +64,18 @@ Soldiers can protect with merchant (and counter attack if someting hit a village
 Village can create an empty town with the same name than village name
 Village know how to extend claims
 Village extends claims before it build someting
-Village can sell extra resources for economic money
+Village can sell extra resources for economic money (resources are destroyed)
+Some villagers build road in stone and gravel between there town and friendly town. (Best will be a stait linear diagonal road (That way it will be the best path to travel between town)) Roads have light
+Player can pay villager to build a road between 2 town. (it cost depending of the distance between the 2 road)
 
 # Other
 Villages forceload claimed chuncks **W AbstractChunkLoaderEntity**
 Villagers forceload there current chunck **W AbstractChunkLoaderEntity**
 Villagers eat food from there inventory. **W** **RV**
 Villagers get more food when they don't have any. **W** **RV**
+Village save data every 5 min about item in stock in the chests + in villagers inventory, number of villager per job, number of villager that need a tool / a weapon or armor, number of building per type, how much resources where produced, animal kill, field break etc.
+Villager use Mvndi weapon stats when hitting
+
+
+Dependencies need to be optionals and not fail when missing.
+Villagers place banner or flag in there townhall and fiew other building
