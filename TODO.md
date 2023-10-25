@@ -31,6 +31,8 @@ Fight Behavior:
  - RangeWeaponAttack while staying close enoth but not to close from target **RV**
  - Random shield defend when opponent is close enoth to hit **RV**
  - horse fight
+ - Place or break bloc to reach player in wilderness
+ - All villagers run away if they can't hit player after 2 min chassing
 
 # Villagers produce ressources (wood, stone, ores, wool, leather, foods).
 Villagers pick up usefull item **RV**
@@ -61,12 +63,13 @@ Merchant try to reach player
 Soldiers can protect with merchant (and counter attack if someting hit a villager (soldier or merchant))
 
 # Villagers claim there village (with the Towny plugin)
-Village can create an empty town with the same name than village name
+Village can create an empty town with the same name than village name / Or Village create a town with 1 fake_residents / Or Village create town and add each Villager as registered NPCs. (cf ResidentUtil.createAndGetNPCResident())
 Village know how to extend claims
 Village extends claims before it build someting
 Village can sell extra resources for economic money (resources are destroyed)
 Some villagers build road in stone and gravel between there town and friendly town. (Best will be a stait linear diagonal road (That way it will be the best path to travel between town)) Roads have light
 Player can pay villager to build a road between 2 town. (it cost depending of the distance between the 2 road)
+PvP should be enabled in villager town
 
 # Other
 Villages forceload claimed chuncks **W AbstractChunkLoaderEntity**
