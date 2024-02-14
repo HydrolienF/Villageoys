@@ -36,7 +36,7 @@ public class VillageoysCommand extends BaseCommand {
 
     @Subcommand("newvillage")
     @Syntax("<village name>")
-    @Description("Create a new Village")
+    @Description("Create a new village")
     public static void onNewVillage(CommandSender commandSender, @Nullable String villageName) {
         if (commandSender instanceof Player player) {
             VillageoysPlugin.getInstance().addVillage(villageName, player.getLocation());
@@ -46,7 +46,7 @@ public class VillageoysCommand extends BaseCommand {
     @Subcommand("newbuilding")
     @Syntax("<village name|uuid> <building name> <builded> <rotation>")
     @CommandCompletion("@villageNameOrUuid @buildingType @builded")
-    @Description("Create a new Village or a new Villageoy")
+    @Description("Create a new village building")
     public static void onNewBuilding(CommandSender commandSender, @NotNull String villageNameOrUuid, @NotNull String buildingType,
             @Nullable String builded, @Nullable String rotation) {
         if (commandSender instanceof Player player) {
@@ -63,7 +63,7 @@ public class VillageoysCommand extends BaseCommand {
     @Subcommand("newvillageoy")
     @Syntax("<village name|uuid>")
     @CommandCompletion("@villageNameOrUuid")
-    @Description("Create a new Villageoy")
+    @Description("Create a new villageoy")
     public static void onNewVillageoy(CommandSender commandSender, @Nullable String villageNameOrUuid) {
         if (commandSender instanceof Player player) {
             Village v = VillageoysPlugin.getInstance().getVillage(villageNameOrUuid);
@@ -96,15 +96,11 @@ public class VillageoysCommand extends BaseCommand {
     @CommandCompletion("@villageNameOrUuid")
     @Description("Print info of an existing village")
     public static void onVillageInfo(CommandSender commandSender, @NotNull String nameOrUuid) {
-        if (commandSender instanceof Player player) {
-            player.sendMessage(Component.text("Village " + nameOrUuid + ": " + VillageoysPlugin.getInstance().getVillage(nameOrUuid)));
-        }
+        commandSender.sendMessage(Component.text("Village " + nameOrUuid + ": " + VillageoysPlugin.getInstance().getVillage(nameOrUuid)));
     }
     @Subcommand("villagelist")
     @Description("Print name or uuid of every existing village")
     public static void onVillageList(CommandSender commandSender) {
-        if (commandSender instanceof Player player) {
-            player.sendMessage(Component.text("Villages: " + VillageoysPlugin.getInstance().getVillagesNames()));
-        }
+        commandSender.sendMessage(Component.text("Villages: " + VillageoysPlugin.getInstance().getVillagesNames()));
     }
 }

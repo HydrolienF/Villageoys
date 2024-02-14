@@ -9,9 +9,8 @@ Create a structure in a single chunck for each builing:
  - Quarry
  - Armory
  - Stable
- - Library
- - Fishing docs
- - Storage
+ - FISHING_DOCS
+ - WAREHOUSE
 <!-- Villages contains building linked to structures -->
 Tool function to list all villages resources **RV**
 Villagers can pick 1 item from a chest **RV LootChest**
