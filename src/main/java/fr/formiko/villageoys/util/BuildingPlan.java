@@ -18,6 +18,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.block.Block;
@@ -40,7 +41,7 @@ public class BuildingPlan {
 
     public static BuildingPlan createFromResourceFile(File resource) {
         try (InputStream inputStream = new FileInputStream(resource)) {
-            CompoundTag tag = NbtIo.readCompressed(inputStream);
+            CompoundTag tag = NbtIo.readCompressed(inputStream, new NbtAccounter(Long.MAX_VALUE, Integer.MAX_VALUE));
             BuildingPlan plan = new BuildingPlan();
             HolderGetter<Block> blockLookup = BuiltInRegistries.BLOCK.asLookup();
             plan.readStructureFromNbt(blockLookup, tag);

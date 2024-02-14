@@ -5,7 +5,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.papermc.paperweight.userdev") version "1.5.5"
+    id("io.papermc.paperweight.userdev") version "1.5.11"
 }
 
 repositories {
@@ -19,17 +19,17 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    paperweight.foliaDevBundle("1.20.1-R0.1-SNAPSHOT")
+    paperweight.foliaDevBundle("1.20.4-R0.1-SNAPSHOT")
     compileOnly("com.github.TownyAdvanced:Towny:0.99.6.0")
     // compileOnly("io.github.townyadvanced.commentedconfiguration:CommentedConfiguration:1.0.0")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     // compileOnly("com.github.HydrolienF:FlagsH:3.0.3") //TODO later
 }
 
-java {
+// java {
   // Configure the java toolchain. This allows gradle to auto-provision JDK 17 on systems that only have JDK 8 installed for example.
-  toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
+//   toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+// }
 
 tasks {
     assemble {

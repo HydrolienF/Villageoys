@@ -3,7 +3,7 @@ package fr.formiko.villageoys;
 import java.io.Serializable;
 import javax.annotation.Nullable;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.jetbrains.annotations.NotNull;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
