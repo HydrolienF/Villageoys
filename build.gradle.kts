@@ -6,6 +6,8 @@ plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.papermc.paperweight.userdev") version "1.5.11"
+    `maven-publish` // Add ./gradlew publishToMavenLocal
+    
 }
 
 repositories {
@@ -60,5 +62,11 @@ tasks {
         filesMatching("plugin.yml") {
             expand(props)
         }
+    }
+}
+
+publishing {
+    publications.create<MavenPublication>("maven") {
+        from(components["java"])
     }
 }

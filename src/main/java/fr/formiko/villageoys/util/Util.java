@@ -28,6 +28,14 @@ public class Util {
             default -> Rotation.NONE;
         };
     }
+    public static String getStringFromRotation(Rotation rot) {
+        return switch (rot) {
+            case NONE -> "NORTH";
+            case CLOCKWISE_90 -> "EAST";
+            case CLOCKWISE_180 -> "SOUTH";
+            case COUNTERCLOCKWISE_90 -> "WEST";
+        };
+    }
     public static BuildingType getBuildingTypeFromString(String bt) {
         for (BuildingType b : BuildingType.values()) {
             if (b.name().equalsIgnoreCase(bt)) {
